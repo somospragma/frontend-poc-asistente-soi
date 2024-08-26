@@ -51,6 +51,11 @@
 
 	&__borde {
 		border-radius: inherit;
+		overflow: hidden;
+		&-img {
+			width: 100%;
+			height: auto;
+		}
 	}
 
 	&__image {
@@ -123,7 +128,8 @@
 .modal-content {
 	@include from($laptop) {
 		top: 54%;
-		left: 85%;
+		left: 83%;
+		max-width: 560px;
 
 		&__close {
 			position: absolute;
@@ -138,9 +144,15 @@
 			}
 		}
 
+		&__borde {
+			&-img {
+				margin-top: -94px;
+			}
+		}
+
 		&__image {
-			top: 60px;
-			left: 128px;
+			top: 58px;
+			left: 239px;
 		}
 
 		&__circle {
@@ -150,6 +162,14 @@
 
 		&__chat {
 			margin-left: 1rem;
+		}
+
+		&__welcome {
+			justify-content: center;
+		}
+
+		&__question {
+			grid-template-columns: 80% 20%;
 		}
 	}
 }

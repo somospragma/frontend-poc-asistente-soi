@@ -33,4 +33,8 @@
 		align-self: flex-start;
 		text-align: left;
 	}
+
+	@include from($laptop) {
+		max-width: 100%;
+	}
 }
