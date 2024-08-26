@@ -1,3 +1,8 @@
-<button [ngClass]="styleClass" class="a-button" type="submit">
+<button
+	[ngClass]="styleClass"
+	class="a-button"
+	(click)="handleClick()"
+	type="submit"
+>
 	{{ text }}
 </button>

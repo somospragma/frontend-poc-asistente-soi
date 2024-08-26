@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'a-button',
@@ -11,4 +11,9 @@ import { Component, Input } from '@angular/core';
 export class AButtonComponent {
 	@Input() styleClass = 'a-button-primary';
 	@Input() text = '';
+	@Output() buttonClick = new EventEmitter<void>();
+
+	handleClick(): void {
+		this.buttonClick.emit();
+	}
 }
