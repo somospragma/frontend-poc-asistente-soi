@@ -160,12 +160,12 @@
 			height: 110px;
 		}
 
-		&__chat {
-			margin-left: 1rem;
-		}
-
 		&__welcome {
 			justify-content: center;
+		}
+
+		&__greeting {
+			text-align: center;
 		}
 
 		&__question {
