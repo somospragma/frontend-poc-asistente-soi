@@ -23,7 +23,7 @@ export class QuestionService {
 			{
 				user_id: this.user.documentNumber,
 				session_id: this.user.sessionId,
-				prompt: 'Quiero liquidar mi planilla como independiente'
+				prompt: 'Quiero modificar mi planilla como independiente'
 			},
 			{
 				user_id: this.user.documentNumber,
