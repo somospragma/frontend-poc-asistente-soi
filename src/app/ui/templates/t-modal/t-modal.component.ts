@@ -129,18 +129,29 @@ export class TModalComponent implements AfterViewInit {
 		this.isInputEmpty = false;
 		this.isDisableInput = true;
 		this.isTyping = true;
-		this.agentService.getResponseAgent(request).subscribe((response) => {
-			if (response.agent_answer) {
+		this.agentService.getResponseAgent(request).subscribe(
+			(response) => {
+				if (response.agent_answer) {
+					this.chats.push({
+						text: response.agent_answer,
+						isUser: false
+					});
+				}
+				this.isDisableInput = false;
+				this.isTyping = false;
+				this.tryFocusInput();
+				setTimeout(() => this.scrollToBottom(), 0);
+			},
+			(error) => {
+				console.error('Error al obtener la respuesta del agente:', error);
+				this.isDisableInput = false; // Asegura que el input se vuelva a habilitar en caso de error
+				this.isTyping = false;
 				this.chats.push({
-					text: response.agent_answer,
+					text: 'Hubo un error al procesar la solicitud. Inténtalo de nuevo.',
 					isUser: false
 				});
 			}
-			this.isDisableInput = false;
-			this.isTyping = false;
-			this.tryFocusInput();
-			setTimeout(() => this.scrollToBottom(), 0);
-		});
+		);
 	}
 
 	tryFocusInput(): void {

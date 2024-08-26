@@ -13,7 +13,7 @@ export class AgentService extends HttpService {
 		this.addHeader('x-api-key', 'G0auLJ0a0r6hJgBl1h0r85N4xxu4apZ7i39KyAE3');
 		const options: OptionsHttp = {
 			headers: this.getHeaders(),
-			timeout: 20000
+			timeout: 90000
 		};
 		return this.httpPOST(
 			'https://if2ni4x49d.execute-api.us-east-1.amazonaws.com/dev/bedrock-agent',
