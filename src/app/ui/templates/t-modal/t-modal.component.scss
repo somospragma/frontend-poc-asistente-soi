@@ -94,19 +94,13 @@
 		overflow-x: hidden;
 		overflow-y: scroll;
 		max-height: 427px;
-		margin-left: 0.5rem;
-		z-index: -3;
+		margin-left: 1rem;
 	}
 
 	&__welcome {
 		display: grid;
 		gap: 1rem;
 	}
-
-	// &__chat-ia {
-	// 	display: grid;
-	// 	gap: 1rem;
-	// }
 
 	&__question {
 		display: grid;

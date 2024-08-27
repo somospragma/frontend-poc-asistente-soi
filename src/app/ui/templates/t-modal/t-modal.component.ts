@@ -101,8 +101,6 @@ export class TModalComponent implements AfterViewInit {
 					prompt: this.valueInput
 				}
 			});
-
-			this.inputText.clearInputValue();
 			this.welcome = false;
 			setTimeout(() => this.scrollToBottom(), 0);
 		}
@@ -157,11 +155,29 @@ export class TModalComponent implements AfterViewInit {
 
 	tryFocusInput(): void {
 		if (!this.inputText.disableInput) {
+			// Asegúrate de resetear la altura antes de enfocar
+			this.inputText.resetHeight();
 			this.inputText.focusInput();
 		} else {
-			setTimeout(() => {
-				this.tryFocusInput();
-			}, 1000);
+			// Evitar recursión continua con un límite de intentos
+			let attempts = 0;
+			const maxAttempts = 5;
+
+			const retryFocus = () => {
+				if (attempts < maxAttempts) {
+					setTimeout(() => {
+						if (!this.inputText.disableInput) {
+							this.inputText.resetHeight();
+							this.inputText.focusInput();
+						} else {
+							attempts++;
+							retryFocus();
+						}
+					}, 1000);
+				}
+			};
+
+			retryFocus();
 		}
 	}
 }

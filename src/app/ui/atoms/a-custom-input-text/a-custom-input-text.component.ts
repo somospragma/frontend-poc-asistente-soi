@@ -20,7 +20,7 @@ export class ACustomInputTextComponent {
 	@Output() debouncedInput = new EventEmitter<string>();
 	@Output() inputChanged = new EventEmitter<boolean>();
 
-	@ViewChild('textInput') textInput!: ElementRef<HTMLInputElement>;
+	@ViewChild('textInput') textInput!: ElementRef<HTMLTextAreaElement>;
 	private inputSubject = new Subject<string>();
 	public currentValue = '';
 	private isResetting = false; // Nueva bandera
@@ -46,7 +46,6 @@ export class ACustomInputTextComponent {
 		if (event.key === 'Enter' && input.value.trim()) {
 			this.debouncedInput.emit(input.value);
 			this.clearInput(input);
-			this.focusInput();
 			this.resetHeight();
 		}
 	}
@@ -58,28 +57,34 @@ export class ACustomInputTextComponent {
 		this.inputChanged.emit(false);
 	}
 
-	clearInputValue(): void {
-		this.textInput.nativeElement.value = '';
-		this.currentValue = '';
-		this.inputSubject.next('');
-		this.inputChanged.emit(false);
-	}
-
 	focusInput(): void {
 		if (this.textInput) {
 			this.textInput.nativeElement.focus();
 		}
+
+		const textArea = this.textInput.nativeElement;
+		// Elimina cualquier salto de línea vacío al final
+		const trimmedValue = textArea.value.trimEnd();
+		if (textArea.value !== trimmedValue) {
+			textArea.value = trimmedValue; // Quita los saltos de línea al final
+			this.currentValue = trimmedValue;
+		}
+		// Mover el cursor al final del texto
+		const length = textArea.value.length;
+		textArea.setSelectionRange(length, length);
 	}
 
 	autoResize() {
 		const textArea = this.textInput.nativeElement;
 		textArea.style.height = 'auto';
 		textArea.style.height = `${textArea.scrollHeight}px`;
+		textArea.style.overflowY = 'auto';
 	}
 
 	resetHeight() {
 		this.isResetting = true;
 		const textArea = this.textInput.nativeElement;
+		textArea.rows = 1;
 		textArea.style.height = 'auto';
 		textArea.style.height = `${64}px`;
 		textArea.style.overflow = 'hidden';
