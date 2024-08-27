@@ -28,6 +28,7 @@ export class ACustomInputTextComponent {
 		const input = event.target as HTMLInputElement;
 		this.inputSubject.next(input.value);
 		this.currentValue = input.value;
+		this.autoResize();
 		if (this.currentValue.length <= 0) {
 			this.inputChanged.emit(false);
 		} else {
@@ -65,5 +66,11 @@ export class ACustomInputTextComponent {
 
 			this.textInput.nativeElement.focus();
 		}
+	}
+
+	autoResize() {
+		const textArea = this.textInput.nativeElement;
+		textArea.style.height = 'auto'; // Reinicia la altura
+		textArea.style.height = `${textArea.scrollHeight}px`; // Ajusta la altura según el contenido
 	}
 }
