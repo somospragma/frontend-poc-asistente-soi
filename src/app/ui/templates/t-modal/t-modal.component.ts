@@ -12,6 +12,7 @@ import { QuestionRequest, Request } from '@core/interfaces/question.interface';
 import { User } from '@core/interfaces/user.interface';
 import { AgentService } from '@core/services/agent/agent.service';
 import { QuestionService } from '@core/services/question/question.service';
+import { TextService } from '@core/services/text/text.service';
 import { UserService } from '@core/services/user/user.service';
 import { ACustomInputTextComponent } from '@ui/atoms/a-custom-input-text/a-custom-input-text.component';
 import { AtomsModule } from '@ui/atoms/atoms.module';
@@ -28,6 +29,7 @@ export class TModalComponent implements AfterViewInit {
 	private readonly agentService = inject(AgentService);
 	private readonly userService = inject(UserService);
 	private readonly questionService = inject(QuestionService);
+	private readonly formatTextService = inject(TextService);
 
 	chats: { text: string; isUser: boolean }[] = [];
 
@@ -128,9 +130,10 @@ export class TModalComponent implements AfterViewInit {
 		this.isTyping = true;
 		this.agentService.getResponseAgent(request).subscribe(
 			(response) => {
+				const answer = this.formatTextService.formatText(response.agent_answer);
 				if (response.agent_answer) {
 					this.chats.push({
-						text: response.agent_answer,
+						text: answer,
 						isUser: false
 					});
 				}
