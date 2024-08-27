@@ -94,7 +94,6 @@ export class TModalComponent implements AfterViewInit {
 				text: this.valueInput,
 				isUser: true
 			});
-
 			this.askingTheAgent({
 				request: {
 					user_id: this.user.documentNumber,
@@ -150,6 +149,8 @@ export class TModalComponent implements AfterViewInit {
 					text: 'Hubo un error al procesar la solicitud. Inténtalo de nuevo.',
 					isUser: false
 				});
+				this.tryFocusInput();
+				setTimeout(() => this.scrollToBottom(), 0);
 			}
 		);
 	}

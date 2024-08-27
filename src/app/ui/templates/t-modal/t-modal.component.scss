@@ -24,9 +24,10 @@
 	transform: translate(-50%, -50%);
 	background: $background-gray;
 	display: grid;
+	overflow: hidden;
 	min-height: 830px;
 	max-height: 830px;
-	align-content: space-between;
+	//align-content: space-between;
 	z-index: 1001;
 	max-width: 360px;
 	font-size: 24px;
@@ -92,10 +93,9 @@
 		position: relative;
 		overflow-x: hidden;
 		overflow-y: scroll;
-		margin-top: 1rem;
-		max-height: 560px;
-		min-height: 560px;
+		max-height: 427px;
 		margin-left: 0.5rem;
+		z-index: -3;
 	}
 
 	&__welcome {
@@ -103,11 +103,16 @@
 		gap: 1rem;
 	}
 
+	&__chat-ia {
+		display: grid;
+		gap: 1rem;
+	}
+
 	&__question {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 1rem;
-		margin-left: 1rem;
+		grid-template-columns: 80% 20%;
+		gap: 0.5rem;
+		margin-left: 0.5rem;
 		margin-bottom: 1rem;
 		align-items: center;
 

@@ -23,12 +23,17 @@ export class ACustomInputTextComponent {
 	@ViewChild('textInput') textInput!: ElementRef<HTMLInputElement>;
 	private inputSubject = new Subject<string>();
 	public currentValue = '';
+	private isResetting = false; // Nueva bandera
 
 	onInputChange(event: Event): void {
 		const input = event.target as HTMLInputElement;
 		this.inputSubject.next(input.value);
 		this.currentValue = input.value;
-		this.autoResize();
+		if (!this.isResetting) {
+			this.autoResize();
+		} else {
+			this.isResetting = false;
+		}
 		if (this.currentValue.length <= 0) {
 			this.inputChanged.emit(false);
 		} else {
@@ -42,6 +47,7 @@ export class ACustomInputTextComponent {
 			this.debouncedInput.emit(input.value);
 			this.clearInput(input);
 			this.focusInput();
+			this.resetHeight();
 		}
 	}
 
@@ -60,17 +66,22 @@ export class ACustomInputTextComponent {
 	}
 
 	focusInput(): void {
-		console.log('focusInput');
 		if (this.textInput) {
-			console.log(this.textInput);
-
 			this.textInput.nativeElement.focus();
 		}
 	}
 
 	autoResize() {
 		const textArea = this.textInput.nativeElement;
-		textArea.style.height = 'auto'; // Reinicia la altura
-		textArea.style.height = `${textArea.scrollHeight}px`; // Ajusta la altura según el contenido
+		textArea.style.height = 'auto';
+		textArea.style.height = `${textArea.scrollHeight}px`;
+	}
+
+	resetHeight() {
+		this.isResetting = true;
+		const textArea = this.textInput.nativeElement;
+		textArea.style.height = 'auto';
+		textArea.style.height = `${64}px`;
+		textArea.style.overflow = 'hidden';
 	}
 }
