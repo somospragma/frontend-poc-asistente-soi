@@ -124,36 +124,80 @@ export class TModalComponent implements AfterViewInit {
 		}
 	}
 
-	askingTheAgent(request: QuestionRequest): void {
+	// askingTheAgent(request: QuestionRequest): void {
+	// 	this.isInputEmpty = false;
+	// 	this.isDisableInput = true;
+	// 	this.isTyping = true;
+	// 	this.agentService.getResponseAgent(request).subscribe(
+	// 		(response) => {
+	// 			const answer = this.formatTextService.formatText(response.agent_answer);
+	// 			if (response.agent_answer) {
+	// 				this.chats.push({
+	// 					text: answer,
+	// 					isUser: false
+	// 				});
+	// 			}
+	// 			this.isDisableInput = false;
+	// 			this.isTyping = false;
+	// 			this.tryFocusInput();
+	// 			setTimeout(() => this.scrollToBottom(), 0);
+	// 		},
+	// 		(error) => {
+	// 			console.error('Error al obtener la respuesta del agente:', error);
+	// 			this.isDisableInput = false; // Asegura que el input se vuelva a habilitar en caso de error
+	// 			this.isTyping = false;
+	// 			this.chats.push({
+	// 				text: 'Hubo un error al procesar la solicitud. Inténtalo de nuevo.',
+	// 				isUser: false
+	// 			});
+	// 			this.tryFocusInput();
+	// 			setTimeout(() => this.scrollToBottom(), 0);
+	// 		}
+	// 	);
+	// }
+
+	async askingTheAgent(request: QuestionRequest): Promise<void> {
 		this.isInputEmpty = false;
 		this.isDisableInput = true;
 		this.isTyping = true;
-		this.agentService.getResponseAgent(request).subscribe(
-			(response) => {
-				const answer = this.formatTextService.formatText(response.agent_answer);
-				if (response.agent_answer) {
-					this.chats.push({
-						text: answer,
-						isUser: false
-					});
-				}
-				this.isDisableInput = false;
-				this.isTyping = false;
-				this.tryFocusInput();
-				setTimeout(() => this.scrollToBottom(), 0);
-			},
-			(error) => {
-				console.error('Error al obtener la respuesta del agente:', error);
-				this.isDisableInput = false; // Asegura que el input se vuelva a habilitar en caso de error
-				this.isTyping = false;
+
+		try {
+			// Llama al método asincrónico y espera la respuesta
+			const response = await this.agentService.getResponseAgentAsync(request);
+			const answer = this.formatTextService.formatText(response.agent_answer);
+
+			// Si hay respuesta del agente, se añade a la lista de chats
+			if (response.agent_answer) {
 				this.chats.push({
-					text: 'Hubo un error al procesar la solicitud. Inténtalo de nuevo.',
+					text: answer,
 					isUser: false
 				});
-				this.tryFocusInput();
-				setTimeout(() => this.scrollToBottom(), 0);
 			}
-		);
+
+			// Reactivar el input y cambiar el estado de "escribiendo"
+			this.isDisableInput = false;
+			this.isTyping = false;
+
+			// Enfocar el input de texto y hacer scroll al fondo del chat
+			this.tryFocusInput();
+			setTimeout(() => this.scrollToBottom(), 0);
+		} catch (error) {
+			console.error('Error al obtener la respuesta del agente:', error);
+
+			// Asegura que el input se vuelva a habilitar en caso de error
+			this.isDisableInput = false;
+			this.isTyping = false;
+
+			// Mostrar un mensaje de error en el chat
+			this.chats.push({
+				text: 'Hubo un error al procesar la solicitud. Inténtalo de nuevo.',
+				isUser: false
+			});
+
+			// Enfocar el input de texto y hacer scroll al fondo del chat
+			this.tryFocusInput();
+			setTimeout(() => this.scrollToBottom(), 0);
+		}
 	}
 
 	tryFocusInput(): void {

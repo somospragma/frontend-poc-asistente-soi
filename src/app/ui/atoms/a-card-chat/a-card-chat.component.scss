@@ -38,3 +38,12 @@
 		max-width: 560px;
 	}
 }
+
+.a-chat-history__user-message a {
+	color: blue; /* Elige el color que desees para los enlaces */
+	text-decoration: underline;
+}
+
+.a-chat-history__user-message a:hover {
+	color: darkblue; /* Color al pasar el cursor por encima */
+}
