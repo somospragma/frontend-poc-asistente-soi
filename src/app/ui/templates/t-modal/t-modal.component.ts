@@ -165,11 +165,12 @@ export class TModalComponent implements AfterViewInit {
 			// Llama al método asincrónico y espera la respuesta
 			const response = await this.agentService.getResponseAgentAsync(request);
 			const answer = this.formatTextService.formatText(response.agent_answer);
+			const answerLinkFormat = this.formatTextService.generateLinkHtml(answer);
 
 			// Si hay respuesta del agente, se añade a la lista de chats
 			if (response.agent_answer) {
 				this.chats.push({
-					text: answer,
+					text: answerLinkFormat,
 					isUser: false
 				});
 			}

@@ -32,7 +32,6 @@ h6,
 p,
 blockquote,
 pre,
-a,
 abbr,
 acronym,
 address,
@@ -148,12 +147,6 @@ img {
 	max-width: 100%;
 	height: auto;
 	display: block;
-}
-
-/* Remueve subrayado y colores predeterminados en enlaces */
-a {
-	text-decoration: none;
-	color: inherit;
 }
 
 /* Configura el tamaño y fuente predeterminada */

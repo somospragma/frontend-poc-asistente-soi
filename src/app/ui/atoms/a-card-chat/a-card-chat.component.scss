@@ -19,6 +19,15 @@
 		font-weight: 400;
 		align-self: flex-end;
 		text-align: left;
+
+		a {
+			color: blue; /* Elige el color que desees para los enlaces */
+			text-decoration: underline;
+		}
+
+		a:hover {
+			color: darkblue; /* Color al pasar el cursor por encima */
+		}
 	}
 
 	&__assistant-message {
@@ -32,18 +41,18 @@
 		word-wrap: break-word; /* Envuelve palabras largas al final de la línea */
 		align-self: flex-start;
 		text-align: left;
+
+		a {
+			color: green; /* Estilo de enlaces en mensajes del asistente */
+			text-decoration: underline;
+		}
+
+		a:hover {
+			color: darkgreen;
+		}
 	}
 
 	@include from($laptop) {
 		max-width: 560px;
 	}
-}
-
-.a-chat-history__user-message a {
-	color: blue; /* Elige el color que desees para los enlaces */
-	text-decoration: underline;
-}
-
-.a-chat-history__user-message a:hover {
-	color: darkblue; /* Color al pasar el cursor por encima */
 }
