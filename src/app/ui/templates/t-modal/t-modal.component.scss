@@ -70,6 +70,11 @@
 		height: auto;
 	}
 
+	&__image-default {
+		border-radius: 50%;
+		margin-top: 15px;
+	}
+
 	&__circle {
 		position: absolute;
 		top: 53%;

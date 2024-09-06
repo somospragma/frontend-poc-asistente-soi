@@ -17,5 +17,21 @@ export const routes: Routes = [
 		loadComponent: async () =>
 			import('./components/home/home.component').then((m) => m.HomeComponent),
 		canActivate: [AuthGuard]
+	},
+	{
+		path: 'skeleton',
+		loadComponent: async () =>
+			import('./components/skeleton/skeleton.component').then(
+				(m) => m.SkeletonComponent
+			),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'css-skeleton',
+		loadComponent: async () =>
+			import('./components/skeleton-css/skeleton-css.component').then(
+				(m) => m.SkeletonCssComponent
+			),
+		canActivate: [AuthGuard]
 	}
 ];
