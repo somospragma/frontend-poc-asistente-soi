@@ -5,6 +5,8 @@ import {
 	ElementRef,
 	EventEmitter,
 	inject,
+	OnDestroy,
+	OnInit,
 	Output,
 	ViewChild
 } from '@angular/core';
@@ -25,7 +27,7 @@ import { ACardChatComponent } from '../../atoms/a-card-chat/a-card-chat.componen
 	templateUrl: './t-modal.component.html',
 	styleUrl: './t-modal.component.scss'
 })
-export class TModalComponent implements AfterViewInit {
+export class TModalComponent implements AfterViewInit, OnDestroy, OnInit {
 	private readonly agentService = inject(AgentService);
 	private readonly userService = inject(UserService);
 	private readonly questionService = inject(QuestionService);
@@ -38,7 +40,7 @@ export class TModalComponent implements AfterViewInit {
 	isDisableInput = false;
 	isTyping = false; // Bandera para indicar si está "escribiendo"
 	welcome = true;
-	defaultQuestion: Request[] = this.questionService.getDefaultQuestions();
+	defaultQuestion: Request[] = [];
 	user: User = this.userService.getUser();
 
 	@ViewChild('chatContainer') chatContainer!: ElementRef;
@@ -46,6 +48,12 @@ export class TModalComponent implements AfterViewInit {
 
 	@ViewChild(ACustomInputTextComponent, { static: false })
 	inputText!: ACustomInputTextComponent;
+
+	ngOnInit(): void {
+		this.defaultQuestion = this.questionService.getDefaultQuestions();
+		console.log(this.defaultQuestion);
+		console.log('onInit modal');
+	}
 
 	handleClose(): void {
 		this.onclose.emit();
@@ -227,5 +235,14 @@ export class TModalComponent implements AfterViewInit {
 
 			retryFocus();
 		}
+	}
+
+	ngOnDestroy(): void {
+		this.questionService.setUser({
+			documentNumber: '',
+			documentType: '',
+			sessionId: '',
+			password: ''
+		});
 	}
 }
